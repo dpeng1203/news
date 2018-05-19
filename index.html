@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    html,body,h2,p,ul,li{
+        margin: 0;
+        padding: 0;
+    }
+    li{
+        list-style: none;
+    }
+    a{
+        color: #333;
+        text-decoration: none;
+    }
+    .container{
+        width: 600px;
+        margin: 0 auto;
+    }
+    .item{
+        margin-top: 20px;
+    }
+    .item::after{
+        content: '';
+        display: block;
+        clear: both;
+    }
+    .item .thumb img{
+        width: 50px;
+        height: 50px;
+    }
+    .item .thumb{
+        float: left;
+    }
+    .item h2{
+        margin-left: 60px;
+        font-size: 14px;
+    }
+    .item p{
+        margin-left: 60px;
+        font-size: 14px;
+        margin-top: 10px;
+        color: #ccc;
+    }
+    .load-more{
+        margin-top: 20px;
+    }
+</style>
+<body>
+    <div class="container">
+        <ul class="news">
+            <li class="item">
+                <a href="http://xw.qq.com/mil/20160830028700/MIL2016083002870002">
+                    <div class="thumb">
+                        <img src="http://inews.gtimg.com/newsapp_ls/0/531644649_150120/0" alt="">
+                    </div>
+                    <h2>外媒称中国已经决心造出世界先进的航空发动机</h2>
+                    <p>资料图：2012年11月14日，第九届中国国际...</p>
+                </a>
+            </li>
+            <li class="item">
+                <a href="http://xw.qq.com/mil/20160830028700/MIL2016083002870002">
+                    <div class="thumb">
+                        <img src="http://inews.gtimg.com/newsapp_ls/0/531644649_150120/0" alt="">
+                    </div>
+                    <h2>外媒称中国已经决心造出世界先进的航空发动机</h2>
+                    <p>资料图：2012年11月14日，第九届中国国际...</p>
+                </a>
+            </li>
+        </ul>
+        <button class="load-more">加载更多</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <script>
+        $('.load-more').on('click',function(){
+            $.ajax({
+                url: 'http://120.78.157.82/novel/sc/duanpeng',
+
+                method: 'get',
+                data: {
+                    pageNum: 1,
+                    pageSize: 6
+                }
+               
+                
+            }).done(function(ret){
+                
+                appendHtml(ret.rows)
+                console.log(1)
+            }).fail(function(){
+                alert('获取新闻失败')
+            })
+
+            
+        })
+        function appendHtml(news){
+            var htmls = ''
+            $.each(news,function(){
+                htmls += '<li class="item">'
+                htmls += '<a href="' + this.link + '">'
+                htmls += '<div class="thumb">'
+                htmls += '<img src="' + this.img + '" alt="">'
+                htmls += '</div>'
+                htmls += '<h2>' + this.title + '</h2>'
+                htmls += '<p>' + this.brif + '</p>'
+                htmls += ' </a></li>'
+
+            })
+            $('.news').append(htmls)
+        }
+
+
+
+
+    
+    </script>
+</body>
+</html>
